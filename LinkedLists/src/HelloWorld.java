@@ -17,6 +17,10 @@ public class HelloWorld {
 		LinkedList l = new LinkedList();
 		l.setHead(node1);
 		System.out.println(l.toString());
+		//l.removeMatched(new ListNode(10));
+		//l.remove(1);
+		ListNode x = l.removeFromEnd();
+		System.out.println(l.toString());
 	}
 
 }
