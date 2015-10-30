@@ -33,6 +33,65 @@ public class LinkedList {
 		}
 	}
 	
+	// Add a new value to the list at a given position.
+	// All values at that position to the end move over to make room.
+	public void insert(int data, int position) {
+		// fix the position
+		if (position < 0) {
+			position = 0;
+		}
+		if (position > length) {
+			position = length;
+		}
+
+		// if the list is empty, make it be the only element
+		if (head == null) {
+			head = new ListNode(data);
+		}
+		// if adding at the front of the list...
+		else if (position == 0) {
+			ListNode temp = new ListNode(data);
+			temp.next = head;
+			head = temp;
+		}
+		// else find the correct position and insert
+		else {
+			ListNode temp = head;
+			for (int i=1; i<position; i+=1) {
+				temp = temp.getNext();
+			}
+			ListNode newNode = new ListNode(data);
+			newNode.next = temp.next;
+			temp.setNext(newNode);
+		}
+		// the list is now one value longer
+		length += 1;
+	} 
+	
+	// Remove and return the node at the head of the list 
+	public ListNode removeFromBegin() {
+		ListNode node = head;
+		if (node != null) {
+			head = node.getNext();
+			node.setNext(null);
+		}
+		return node;
+	}
+	
+	// Remove and return the node at the end of the list 
+	public ListNode getLast() {
+		if (head == null) 
+			return null;
+		if (head.getNext() == null) {
+			return head;
+		}
+		ListNode p = head.getNext();
+		while(p.getNext() != null) { 
+			p = p.getNext();
+		}
+		return p;
+	}
+	
 	// Remove the value at a given position.
 	// If the position is less than 0, remove the value at position 0.
 	// If the position is greater than 0, remove the value at the last position.
@@ -109,6 +168,24 @@ public class LinkedList {
 			p = q;
 		}
 	}	
+	
+	// Find the position of the first value that is equal to a given value.
+	// The equals method us used to determine equality.
+	public int getPosition(int data) {
+		// go looking for the data
+		ListNode temp = head;
+		int pos = 0;
+		while (temp != null) {
+			if (temp.getData() == data) {
+				// return the position if found
+				return pos;
+			}
+			pos += 1;
+			temp = temp.getNext();
+		}
+		// else return -1
+		return Integer.MIN_VALUE;
+	}
 	
 	// Return a string representation of this collection, in the form ["str1","str2",...].
 	public String toString() {

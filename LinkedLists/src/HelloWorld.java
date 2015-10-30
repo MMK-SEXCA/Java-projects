@@ -19,6 +19,7 @@ public class HelloWorld {
 		System.out.println(l.toString());
 		//l.removeMatched(new ListNode(10));
 		//l.remove(1);
+		System.out.println("position of  10 is "+l.getPosition(40));
 		ListNode x = l.removeFromEnd();
 		System.out.println(l.toString());
 	}
