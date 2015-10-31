@@ -7,7 +7,6 @@ public class BinaryTree {
 	private Queue<BinaryTreeNode> q;
 
 	public BinaryTree(BinaryTreeNode root) {
-		super();
 		this.root = root;
 		q = new LinkedList<BinaryTreeNode>();
 		q.add(root);
@@ -52,4 +51,90 @@ public class BinaryTree {
         	}
         }
     }     
+    
+    public int numberOfNodes(){
+    	return numberOfNodes(this.root);
+    }
+    
+    private int numberOfNodes(BinaryTreeNode node){
+    	int leftCount =  node.left == null? 0 : numberOfNodes(node.left);
+    	int rightCount = node.right == null? 0 : numberOfNodes(node.right);
+    	return 1 + leftCount + rightCount;
+    }
+    
+    public void inOrderTraversal(BinaryTreeNode node){
+    	if(node != null){
+    		inOrderTraversal(node.left);
+    		System.out.print(node.data+" ");
+    		inOrderTraversal(node.right);
+    	}
+    }
+    
+    
+    public void postOrderTraversal(BinaryTreeNode node){
+    	if(node != null){
+    		postOrderTraversal(node.left);
+    		postOrderTraversal(node.right);
+    		System.out.print(node.data+" ");
+    	}
+    }
+    
+    public void preOrderTraversal(BinaryTreeNode node){
+    	if(node != null){
+    		System.out.print(node.data+" ");
+    		preOrderTraversal(node.left);
+    		preOrderTraversal(node.right);
+    	}
+    }
+    
+    public void levelOrderTraversal(BinaryTreeNode node){
+    	Queue<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>();
+    	q.add(node);
+    	while(!q.isEmpty()){
+    		System.out.print(q.peek().data + " ");
+    		if(q.peek().left != null)
+    			q.add(q.peek().left);
+    		if(q.peek().right != null)
+    			q.add(q.peek().right);
+    		q.poll();
+    	}
+    }
+    
+    public boolean searchBinaryTree(int data){
+    	Queue<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>();
+    	q.add(this.getRoot());
+    	while(!q.isEmpty()){
+    		if(q.peek().data==data){
+    			return true;
+    		}else{
+    			if(q.peek().left != null)
+    				q.add(q.peek().left);
+    			if(q.peek().right != null)
+    				q.add(q.peek().right);
+    		}
+    		q.poll();
+    	}
+    	return false;
+    }
+    
+    public boolean searchBinaryTreeRecursive(BinaryTreeNode node,int data){
+    	if(node == null){
+    		return false;
+    	}else if(node.data==data){
+    		return true;
+    	}else{
+    		return searchBinaryTreeRecursive(node.left,data)||searchBinaryTreeRecursive(node.right,data);
+    	}
+    }
+    
+    // Returns the depth of this binary tree. The depth of a binary tree is the
+ 	// length of the longest path from this node to a leaf. The depth of a
+ 	// binary tree with no descendants (that is, just a leaf) is zero.
+    public int maxDepthBinaryTreeRecursive(BinaryTreeNode node){
+    	if(node == null){
+    		return 0;
+    	}else{
+    		return 1+ Math.max(maxDepthBinaryTreeRecursive(node.left),maxDepthBinaryTreeRecursive(node.right));
+    	}
+    }
 }

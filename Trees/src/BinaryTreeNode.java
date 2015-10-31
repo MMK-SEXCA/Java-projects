@@ -47,7 +47,7 @@ public class BinaryTreeNode {
 
 
 	// Tests whether the root argument contains within itself the data argument.
-	public static boolean findInBinaryTree(BinaryTreeNode root, int  data) {
+	public boolean findInBinaryTree(BinaryTreeNode root, int  data) {
 		if (root == null)
 		    return false;
 		if (root.getData() == data)
