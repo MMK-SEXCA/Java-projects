@@ -8,8 +8,7 @@
  */
 public class FriesMachine extends PrepareItem{
 	
-	public FriesMachine(int t) {
-		super("FriesMachine");
-		super.timer = t;
+	public FriesMachine(int timer) {
+		super(timer);
 	}
 }

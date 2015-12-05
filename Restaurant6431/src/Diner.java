@@ -70,7 +70,6 @@ public class Diner implements Runnable{
 	public void run() {
 		// TODO Auto-generated method stub
 		OutputLogger output = OutputLogger.getStaticInstance();
-		//DinerEntry dinerEntry = output.getOutputData()[dinerId];
 		DinerEntry dinerEntry = output.getOutputData().get(dinerId);
 		seatedTable = Tables.getStaticInstance().getTableForDiner(this);
 		seatingTime = Timer.getStaticInstance().getTime();
@@ -78,6 +77,7 @@ public class Diner implements Runnable{
 		seatedTable.setOrder(this.order);
 		seatedTable.waitOnCookAssigned();
 		cook = seatedTable.cook;
+		//To make sure cook is not accesses before being assigned.
 		while(cook==null){
 			;
 		}
@@ -85,6 +85,7 @@ public class Diner implements Runnable{
 		dinerEntry.cookNumber = cook.getId();
 		seatedTable.waitOnFoodServed();
 		
+		//TODO: Copy time to logs.
 		dinerEntry.arrivalTime = arrivalTime;
 		dinerEntry.seatingTime = seatingTime;
 		dinerEntry.tableNumber = seatedTable.tableId;
@@ -99,7 +100,8 @@ public class Diner implements Runnable{
 				}
 			} catch(InterruptedException ie) {}
 		}
-
+		
+		//TODO: Copy used time to logs.
 		dinerEntry.burgerMachineUsedTime = seatedTable.timeBurgerMacihineWasUsed;
 		dinerEntry.friesMachineUsedTime = seatedTable.timeFriesMachineWasUsed;
 		dinerEntry.sodaMachineUsedTime = seatedTable.timeSodaMachineWasUsed;

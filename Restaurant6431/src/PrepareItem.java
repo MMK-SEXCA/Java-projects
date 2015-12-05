@@ -9,17 +9,12 @@
 public class PrepareItem {
 	public int timer;
 	public boolean isOccupied;
-	private String machine;
 	
-	public PrepareItem(String name) {
-		this.machine = name;
+	public PrepareItem(int timer) {
+		this.timer = timer;
 		isOccupied = false;
     }
-	
-	public String getName() {
-		return machine;
-	}
-	
+
 	synchronized public void occupy() {
 		isOccupied = true;
 	}

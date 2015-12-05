@@ -8,6 +8,7 @@
  */
 public class Cook implements Runnable{
 	
+	private final int MAX_TIME=120;
 	private int cookId;		
 	private Table tableServing;
 	private DinerOrder order;
@@ -28,9 +29,10 @@ public class Cook implements Runnable{
 	}
 	
 	public void run() {
-		while(Timer.getStaticInstance().getTime() <= 120 || Diners.getStaticInstance().getNumberOfCurrentDiners() > 0) {
+		while(Timer.getStaticInstance().getTime() <= MAX_TIME || Diners.getStaticInstance().getNumberOfCurrentDiners() > 0) {
 				tableServing = Tables.getStaticInstance().getTableForCook();
 				if(tableServing != null) {
+					//TODO: initialize machine time used.
 					this.timeFriesMachineWasUsed = -1;
 					this.timeSodaMachineWasUsed = -1;
 					this.timeSundaeMachineWasUsed = -1;
@@ -42,6 +44,7 @@ public class Cook implements Runnable{
 						PrepareItem fooditem = machine.getMachineFor(order);
 						fooditem.prepare(order, this);
 					}
+					//TODO: Copy time used.
 					this.tableServing.timeBurgerMacihineWasUsed = this.timeBurgerMacihineWasUsed;
 					this.tableServing.timeFriesMachineWasUsed = this.timeFriesMachineWasUsed;
 					this.tableServing.timeSodaMachineWasUsed = this.timeSodaMachineWasUsed;
