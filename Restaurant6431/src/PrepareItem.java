@@ -30,34 +30,25 @@ public class PrepareItem {
 	
 	public void prepare(DinerOrder order, Cook cook) {
 		int timeForCooking = timer;
-		switch(machine) {
-		case "BurgerMachine":
+		if(this instanceof BurgerMachine){
 			timeForCooking = order.numberOfBurgers * timer;
-			break;
-		case "FriesMachine":
+		}else if(this instanceof FriesMachine){
 			timeForCooking = order.numberOfFries * timer;
-			break;
-		case "CokeMachine":
+		}else if(this instanceof CokeMachine){
 			timeForCooking = order.numberOfCokes * timer;
-			break;
-		case "SundaeMachine":
+		}else if(this instanceof SundaeMachine){
 			timeForCooking = order.numberOfSundae * timer;
-			break;
 		}
+		
 		int startTime = Timer.getStaticInstance().getTime();
-		switch(machine) {
-		case "BurgerMachine":
+		if(this instanceof BurgerMachine){
 			cook.timeBurgerMacihineWasUsed = startTime;
-			break;
-		case "FriesMachine":
+		}else if(this instanceof FriesMachine){
 			cook.timeFriesMachineWasUsed = startTime;
-			break;
-		case "CokeMachine":
+		}else if(this instanceof CokeMachine){
 			cook.timeSodaMachineWasUsed = startTime;
-			break;
-		case "SundaeMachine":
+		}else if(this instanceof SundaeMachine){
 			cook.timeSundaeMachineWasUsed = startTime;
-			break;	
 		}
 		
 		while(Timer.getStaticInstance().getTime() < startTime + timeForCooking) {
@@ -69,24 +60,19 @@ public class PrepareItem {
 			} catch(InterruptedException ie) {}
 		}
 		this.isOccupied = false;
-		switch(machine) {
-		case "BurgerMachine":
+		
+		if(this instanceof BurgerMachine){
 			order.burgersReady = true;
 			//System.out.println("Time : "+Timer.getStaticInstance().getTime()+" Burgers are ready by "+Thread.currentThread().getName());
-			break;
-		case "FriesMachine":
+		}else if(this instanceof FriesMachine){
 			order.friesReady = true;
 			//System.out.println("Time : "+Timer.getStaticInstance().getTime()+" Fries are ready by "+Thread.currentThread().getName());
-			break;
-		case "CokeMachine":
+		}else if(this instanceof CokeMachine){
 			order.cokeReady = true;
 			//System.out.println("Time : "+Timer.getStaticInstance().getTime()+" Coke is ready by "+Thread.currentThread());
-			break;
-		case "SundaeMachine":
+		}else if(this instanceof SundaeMachine){
 			order.sundaeReady = true;
 			//System.out.println("Time : "+Timer.getStaticInstance().getTime()+" Sundae is ready by "+Thread.currentThread().getName());
-			break;
 		}
-		
 	}
 }

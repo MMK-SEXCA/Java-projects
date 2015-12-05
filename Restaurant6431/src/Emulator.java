@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Emulator {
 	
@@ -77,15 +78,15 @@ public class Emulator {
 	 */
 	private void printOutput() {
 		String str;
-		str = "Diner\t" +"Arrived" + "Seating\t" +"Table ID" +"Cook Num\t" +"Food\t" + 
-				"Leaving\t"+"BTime\t"+"FTime\t"+"CTime\t"+"STime";
+		str = outputLogger.header;
 		System.out.println(str);
-		DinerEntry[] entry = outputLogger.getOutputData();
-		for(int i=0; i<entry.length; i++) {
-			str = 	i + "\t" + entry[i].toString();
+		ArrayList<DinerEntry> entry = outputLogger.getOutputData();
+		for(int i=0; i<entry.size(); i++) {
+			str = 	i + "\t" + entry.get(i).toString();
 			System.out.println(str);
 		}
 	}
+	
 	/**
 	 * @param numberOfDiners
 	 * @param numberOfCooks

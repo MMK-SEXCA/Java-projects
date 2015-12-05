@@ -16,7 +16,7 @@ public class Diner implements Runnable{
 	private DinerOrder order;			 
 	private Cook cook;
 	private boolean inRestaurant;
-	private Thread t;			
+	private Thread thread;			
 	
 	/**
 	 * @param arrivalTimeStamp
@@ -30,7 +30,7 @@ public class Diner implements Runnable{
 		this.seatingTime = -1;
 		this.order = newDinerOrder;
 		this.inRestaurant = false;
-		t = new Thread(this, "Diner Number - "+this.dinerId);
+		this.thread = new Thread(this, "Diner Number - "+this.dinerId);
 	}
 	
 	
@@ -60,7 +60,7 @@ public class Diner implements Runnable{
 
 	public void dinerEnterRestaurant() {
 		inRestaurant = true;
-		t.start();
+		this.thread.start();
 	}
 
 	/* (non-Javadoc)
@@ -70,7 +70,8 @@ public class Diner implements Runnable{
 	public void run() {
 		// TODO Auto-generated method stub
 		OutputLogger output = OutputLogger.getStaticInstance();
-		DinerEntry dinerEntry = output.getOutputData()[dinerId];
+		//DinerEntry dinerEntry = output.getOutputData()[dinerId];
+		DinerEntry dinerEntry = output.getOutputData().get(dinerId);
 		seatedTable = Tables.getStaticInstance().getTableForDiner(this);
 		seatingTime = Timer.getStaticInstance().getTime();
 		System.out.println("Time : "+Timer.getStaticInstance().getTime()+"\t"+Thread.currentThread().getName() + " is seated on Table-" + seatedTable.tableId);

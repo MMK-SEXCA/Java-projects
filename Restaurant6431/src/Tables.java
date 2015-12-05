@@ -75,6 +75,7 @@ public class Tables {
 			for(int i=0; i<tables.length; i++) {
 				if(tables[i].isOccupied && !tables[i].cookAssigned) {
 					index = i;
+					//TODO : Implement First Come First Serve order.
 				}
 			}
 			

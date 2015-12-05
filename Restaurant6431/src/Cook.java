@@ -11,7 +11,7 @@ public class Cook implements Runnable{
 	private int cookId;		
 	private Table tableServing;
 	private DinerOrder order;
-	private Thread th;
+	private Thread thread;
 	public int timeBurgerMacihineWasUsed;
 	public int timeFriesMachineWasUsed;
 	public int timeSodaMachineWasUsed;
@@ -19,8 +19,8 @@ public class Cook implements Runnable{
 	
 	public Cook(int cookId) {
 		this.cookId = cookId;
-		th = new Thread(this, "Cook - "+this.cookId);
-		th.start();
+		this.thread = new Thread(this, "Cook - "+this.cookId);
+		this.thread.start();
 	}
 	
 	public int getId() {
@@ -34,19 +34,19 @@ public class Cook implements Runnable{
 					this.timeFriesMachineWasUsed = -1;
 					this.timeSodaMachineWasUsed = -1;
 					this.timeSundaeMachineWasUsed = -1;
-					tableServing.assignCook(this);
-					tableServing.waitOnOrder();
-					order = tableServing.getOrder();
+					this.tableServing.assignCook(this);
+					this.tableServing.waitOnOrder();
+					order = this.tableServing.getOrder();
 					VendingMachine machine = VendingMachine.getInstance();
 					while(!order.isComplete()) {
 						PrepareItem fooditem = machine.getMachineFor(order);
 						fooditem.prepare(order, this);
 					}
-					tableServing.timeBurgerMacihineWasUsed = this.timeBurgerMacihineWasUsed;
-					tableServing.timeFriesMachineWasUsed = this.timeFriesMachineWasUsed;
-					tableServing.timeSodaMachineWasUsed = this.timeSodaMachineWasUsed;
-					tableServing.timeSundaeMachineWasUsed = this.timeSundaeMachineWasUsed;
-					tableServing.serveFood();
+					this.tableServing.timeBurgerMacihineWasUsed = this.timeBurgerMacihineWasUsed;
+					this.tableServing.timeFriesMachineWasUsed = this.timeFriesMachineWasUsed;
+					this.tableServing.timeSodaMachineWasUsed = this.timeSodaMachineWasUsed;
+					this.tableServing.timeSundaeMachineWasUsed = this.timeSundaeMachineWasUsed;
+					this.tableServing.serveFood();
 				}
 		}
 	}
