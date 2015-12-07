@@ -26,9 +26,16 @@ public class Main {
 		//int array[] = {1,2};
 		//System.out.println(" sum bit difference = "+sumBitDifferences(array,64));
 		int array[] = {1,4,45,6,7,10,8};
-		int x = 10;
+		int x = 13;
 		printPairs(array,x);
 		
+		Point A,B,C,D;
+		A = new Point(2,3);B = new Point(4,6);C = new Point(7,8);D = new Point(9,10);
+		if(overlappingTriangles(A,C,B,D)){
+			System.out.println("the rectangles are overlapping.");
+		}else{
+			System.out.println("the rectangles are not overlapping.");
+		}
 	}
 	
 	/*recursive function to retrieve power.*/
@@ -81,5 +88,25 @@ public class Main {
 			
 			binmap[array[i]] = true;
 		}
+	}
+	
+	/*Return if triangles are overlapping.*/
+	public static boolean overlappingTriangles(Point p1, Point p2, Point p3, Point p4){
+		if(p2.x < p3.x || p4.x < p1.x){
+			return false;
+		}//TODO : 
+		if(p2.y < p3.y || p4.y < p1.y ){
+			return false;
+		}
+		return true;
+	}
+}
+
+class Point{
+	float x;
+	float y;
+	Point(float x, float y){
+		this.x = x;
+		this.y = y;
 	}
 }
