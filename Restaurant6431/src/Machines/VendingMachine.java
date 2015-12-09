@@ -1,13 +1,17 @@
+package Machines;
 /**
  * 
  */
-
+import Constants.*;
+import Customer.Order;
+import Customer.Customers;
+import Resources.Clock;
 /**
  * @author Rakshith Kunchum
  *
  */
 public class VendingMachine {
-	private final int MAX_TIME=120;
+	private final int MAX_TIME = Constants.getMaxTime();
 	private static VendingMachine instance = null;
 	private BurgerDispenser burgerDispenser;
 	private FriesDispenser friesDispenser;

@@ -1,7 +1,8 @@
+package Customer;
 /**
  * 
  */
-
+import Resources.*;
 /**
  * @author Rakshith Kunchum
  *
@@ -59,7 +60,7 @@ public class Customers {
 		for(int i=0; i<customers.length; i++) {
 			if(customers[i].getArrivalTime() == Clock.getStaticInstance().getTime()) {
 				customers[i].dinerEnterRestaurant();
-				System.out.println("Time : "+Clock.getStaticInstance().getTime()+"\t"+"Diner Number - " + i + " arrived.");
+				System.out.println("Time : "+Clock.getStaticInstance().getTime()+"\t"+"Customer ID - " + i + " arrived.");
 				this.numberOfCurrentDiners++;
 			}
 		}

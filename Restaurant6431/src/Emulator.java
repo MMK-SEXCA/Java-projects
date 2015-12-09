@@ -6,10 +6,14 @@
  * @author Rakshith Kunchum
  *
  */
+import Customer.*;
+import Output.Logger;
+import Resources.*;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-
+import Constants.*;
 public class Emulator {
 	
 	private final int MAX_TIME = Constants.getMaxTime();

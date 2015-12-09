@@ -1,7 +1,11 @@
+package Customer;
 /**
  * 
  */
 
+import Resources.*;
+import Constants.*;
+import Output.Logger;
 /**
  * @author Rakshith Kunchum
  *
@@ -30,7 +34,7 @@ public class Customer implements Runnable{
 		this.seatingTime = -1;
 		this.order = newDinerOrder;
 		this.inRestaurant = false;
-		this.thread = new Thread(this, "Diner ID - "+this.dinerId);
+		this.thread = new Thread(this, "Customer ID - "+this.dinerId);
 	}
 	
 	
@@ -71,7 +75,7 @@ public class Customer implements Runnable{
 		Logger output = Logger.getStaticInstance();
 		CustomerEntry customerEntry = output.getOutputData().get(dinerId);
 		getTableForDiner();
-		System.out.println("Time : "+Clock.getStaticInstance().getTime()+"\t"+Thread.currentThread().getName() + " is seated on Table-" + seatedTable.tableId);
+		System.out.println("Time : "+Clock.getStaticInstance().getTime()+"\t"+Thread.currentThread().getName() + " is seated on Table - " + seatedTable.tableId);
 		this.seatedTable.setOrder(this.order);
 		this.seatedTable.waitOnCookAssigned();
 		this.cook = this.seatedTable.cook;

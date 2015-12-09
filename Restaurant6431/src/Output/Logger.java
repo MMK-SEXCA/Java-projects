@@ -1,3 +1,6 @@
+package Output;
+import Customer.*;
+
 import java.util.ArrayList;
 
 /**

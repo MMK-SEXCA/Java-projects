@@ -1,7 +1,10 @@
+package Machines;
 /**
  * 
  */
-
+import Resources.Clock;
+import Resources.Cook;
+import Customer.Order;
 /**
  * @author Rakshith Kunchum
  *

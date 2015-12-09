@@ -1,7 +1,9 @@
+package Resources;
 /**
  * 
  */
-
+import Customer.Customers;
+import Customer.Customer;
 /**
  * @author Rakshith Kunchum
  *
