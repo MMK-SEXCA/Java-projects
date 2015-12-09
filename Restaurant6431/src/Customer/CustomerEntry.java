@@ -21,7 +21,7 @@ public class CustomerEntry {
 	public int timeOfLeaving;
 	
 	public String toString(){
-		return arrivalTime + "\t" + seatingTime + "\t" + tableNumber + "\t" + cookNumber + "\t\t" + 
+		return arrivalTime + "\t" + seatingTime + "\t" + tableNumber + "\t" + cookNumber + "\t" + 
 				foodServedTime + "\t" + timeOfLeaving+ "\t" + burgerMachineUsedTime+ "\t" + friesMachineUsedTime+ "\t" +
 				sodaMachineUsedTime+ "\t" + sundaeMachineUsedTime;
 	}

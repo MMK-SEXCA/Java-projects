@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class Logger {
 	private static Logger instance;
 	private ArrayList<CustomerEntry> DinerLogs;
-	public String header = "Diner\t" +"Arrived" + "Seating\t" +"Table-ID" +"Cook-ID\t" +"Food\t" + 
-			"Leaving\t"+"BTime\t"+"FTime\t"+"CTime\t"+"STime";
+	public String header = "Diner\t" +"Arrived" + "Seating\t" +"Table-ID" +"Cook-ID\t" +"Serving\t" + 
+			"Leaving\t"+"Burger\t"+"Fries\t"+"Coke\t"+"Sundae";
 	
 	private Logger() {
 		
