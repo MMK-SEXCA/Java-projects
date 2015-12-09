@@ -32,10 +32,7 @@ public class Cook implements Runnable{
 		while(Timer.getStaticInstance().getTime() <= MAX_TIME || Diners.getStaticInstance().getNumberOfCurrentDiners() > 0) {
 				tableServing = Tables.getStaticInstance().getTableForCook();
 				if(tableServing != null) {
-					//TODO: initialize machine time used.
-					this.timeFriesMachineWasUsed = -1;
-					this.timeSodaMachineWasUsed = -1;
-					this.timeSundaeMachineWasUsed = -1;
+					InitailizeMachineTimeUsed();
 					this.tableServing.assignCook(this);
 					this.tableServing.waitOnOrder();
 					order = this.tableServing.getOrder();
@@ -44,13 +41,28 @@ public class Cook implements Runnable{
 						PrepareItem fooditem = machine.getMachineFor(order);
 						fooditem.prepare(order, this);
 					}
-					//TODO: Copy time used.
-					this.tableServing.timeBurgerMacihineWasUsed = this.timeBurgerMacihineWasUsed;
-					this.tableServing.timeFriesMachineWasUsed = this.timeFriesMachineWasUsed;
-					this.tableServing.timeSodaMachineWasUsed = this.timeSodaMachineWasUsed;
-					this.tableServing.timeSundaeMachineWasUsed = this.timeSundaeMachineWasUsed;
+					CopyMachineTimeUsed();
 					this.tableServing.serveFood();
 				}
 		}
+	}
+
+	/**
+	 * 
+	 */
+	private void CopyMachineTimeUsed() {
+		this.tableServing.timeBurgerMacihineWasUsed = this.timeBurgerMacihineWasUsed;
+		this.tableServing.timeFriesMachineWasUsed = this.timeFriesMachineWasUsed;
+		this.tableServing.timeSodaMachineWasUsed = this.timeSodaMachineWasUsed;
+		this.tableServing.timeSundaeMachineWasUsed = this.timeSundaeMachineWasUsed;
+	}
+
+	/**
+	 * 
+	 */
+	private void InitailizeMachineTimeUsed() {
+		this.timeFriesMachineWasUsed = -1;
+		this.timeSodaMachineWasUsed = -1;
+		this.timeSundaeMachineWasUsed = -1;
 	}
 }

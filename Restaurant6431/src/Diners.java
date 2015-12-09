@@ -16,7 +16,6 @@ public class Diners {
 	 * @param numberOfDiners
 	 */
 	public Diners() {
-		// TODO Auto-generated constructor stub
 		this.numberOfCurrentDiners = 0;
 	}
 
@@ -24,7 +23,6 @@ public class Diners {
 	 * @param numberOfDiners
 	 */
 	public void initialize(int numberOfDiners) {
-		// TODO Auto-generated method stub
 		diners = new Diner[numberOfDiners];
 	}
 
@@ -32,7 +30,6 @@ public class Diners {
 	 * @return
 	 */
 	public static Diners getStaticInstance() {
-		// TODO Auto-generated method stub
 		if(instance == null) {
 			instance = new Diners();
 		}

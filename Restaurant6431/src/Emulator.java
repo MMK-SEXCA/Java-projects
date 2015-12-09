@@ -34,7 +34,6 @@ public class Emulator {
 	 * @param string
 	 */
 	private static Emulator parseInput(String inputFilename) {
-		// TODO Auto-generated method stub
 		Emulator restaurant = null;
 		try{
 			FileReader inputFile = new FileReader(inputFilename);
@@ -59,7 +58,6 @@ public class Emulator {
 	}
 
 	private void runSimulation() {
-		// TODO Auto-generated method stub
 		while(timer.getTime() <= MAX_TIME || Diners.getStaticInstance().getNumberOfCurrentDiners() > 0) {
 			diners.startDinersArrivedNow();
 			timer.increment(); 
@@ -89,7 +87,6 @@ public class Emulator {
 	 * @param numberOfTables
 	 */
 	public Emulator(int numberOfDiners, int numberOfTables, int numberOfCooks) {
-		// TODO Auto-generated constructor stub
 		timer = Timer.getStaticInstance();
 		tables = Tables.getStaticInstance();
 		tables.initialize(numberOfTables);

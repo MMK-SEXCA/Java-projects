@@ -25,7 +25,6 @@ public class Table {
 	 * @param tableId
 	 */
 	public Table(int tableId) {
-		// TODO Auto-generated constructor stub
 		this.tableId = tableId;
 		this.isOccupied = false;
 		this.cookAssigned = false;
@@ -51,7 +50,7 @@ public class Table {
 	
 	public synchronized void waitOnCookAssigned() {
 		try {
-			while(!cookAssigned)
+			while(!this.cookAssigned)
 				wait();
 		} catch(InterruptedException ie) {}
 	}
@@ -64,21 +63,21 @@ public class Table {
 	
 	public synchronized void waitOnOrder() {
 		try {
-			while(order == null)
+			while(this.order == null)
 				wait();
 		} catch(InterruptedException ie) {}
 	}
 	
 	public synchronized void waitOnFoodServed() {
 		try {
-			while(!foodServed)
+			while(!this.foodServed)
 				wait();
 		} catch(InterruptedException ie) {}
 	}
 	
 	public synchronized void serveFood() {
-		foodServed = true;
-		timeFoodBroughtToTable = Timer.getStaticInstance().getTime();
+		this.foodServed = true;
+		this.timeFoodBroughtToTable = Timer.getStaticInstance().getTime();
 		notifyAll();
 	}
 }

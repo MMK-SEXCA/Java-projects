@@ -9,7 +9,7 @@
 public class Timer {
 	
 	private static Timer timer = null;
-	private int time;
+	private static int time;
 	
 	/**
 	 * default constructor
@@ -18,7 +18,7 @@ public class Timer {
 		time = 0;
 	}
 	
-	public int getTime() {
+	public static int getTime() {
 		return time;
 	}
 
@@ -26,14 +26,13 @@ public class Timer {
 	 * @return
 	 */
 	public static Timer getStaticInstance() {
-		// TODO Auto-generated method stub
 		if(timer == null) {
 			timer = new Timer();
 		}
 		return timer;
 	}
 	
-	public void increment() {
+	public static void increment() {
 		try {
 			Thread.sleep(50);
 		} catch(InterruptedException ie) {

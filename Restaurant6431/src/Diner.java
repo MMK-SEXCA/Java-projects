@@ -8,6 +8,7 @@
  */
 public class Diner implements Runnable{
 	
+	private final int EATING_TIME = 30; 
 	private int dinerId;
 	private int arrivalTime;		
 	private int seatingTime;
@@ -24,7 +25,6 @@ public class Diner implements Runnable{
 	 * @param orderNumber
 	 */
 	public Diner(int arrivalTimeStamp, DinerOrder newDinerOrder, int orderNumber) {
-		// TODO Auto-generated constructor stub
 		this.dinerId = orderNumber;
 		this.arrivalTime = arrivalTimeStamp;
 		this.seatingTime = -1;
@@ -59,62 +59,75 @@ public class Diner implements Runnable{
 	}
 
 	public void dinerEnterRestaurant() {
-		inRestaurant = true;
+		this.inRestaurant = true;
 		this.thread.start();
 	}
 
-	/* (non-Javadoc)
+	/* 
 	 * @see java.lang.Runnable#run()
 	 */
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		OutputLogger output = OutputLogger.getStaticInstance();
 		DinerEntry dinerEntry = output.getOutputData().get(dinerId);
-		seatedTable = Tables.getStaticInstance().getTableForDiner(this);
-		seatingTime = Timer.getStaticInstance().getTime();
+		getTableForDiner();
 		System.out.println("Time : "+Timer.getStaticInstance().getTime()+"\t"+Thread.currentThread().getName() + " is seated on Table-" + seatedTable.tableId);
-		seatedTable.setOrder(this.order);
-		seatedTable.waitOnCookAssigned();
-		cook = seatedTable.cook;
-		//To make sure cook is not accesses before being assigned.
-		while(cook==null){
-			;
-		}
+		this.seatedTable.setOrder(this.order);
+		this.seatedTable.waitOnCookAssigned();
+		this.cook = this.seatedTable.cook;
+		//To make sure cook is not accessed before being assigned.
+		//while(cook==null){;}
 		//System.out.println("Cook - " + cook.getId());
 		dinerEntry.cookNumber = cook.getId();
-		seatedTable.waitOnFoodServed();
-		
-		//TODO: Copy time to logs.
-		dinerEntry.arrivalTime = arrivalTime;
-		dinerEntry.seatingTime = seatingTime;
-		dinerEntry.tableNumber = seatedTable.tableId;
-		
+		this.seatedTable.waitOnFoodServed();
+		CopyTimeLogsToDinerEntry(dinerEntry);
 		this.servedTime = Timer.getStaticInstance().getTime();
 		System.out.println("Time : "+Timer.getStaticInstance().getTime()+"\t"+Thread.currentThread().getName() + " Started Eating");
-		while (Timer.getStaticInstance().getTime() < servedTime + 30) {
-			// eating
+		while (Timer.getStaticInstance().getTime() < servedTime + EATING_TIME) {
 			try {
 				synchronized(Timer.getStaticInstance()) {
 					Timer.getStaticInstance().wait();
 				}
 			} catch(InterruptedException ie) {}
 		}
-		
-		//TODO: Copy used time to logs.
-		dinerEntry.burgerMachineUsedTime = seatedTable.timeBurgerMacihineWasUsed;
-		dinerEntry.friesMachineUsedTime = seatedTable.timeFriesMachineWasUsed;
-		dinerEntry.sodaMachineUsedTime = seatedTable.timeSodaMachineWasUsed;
-		dinerEntry.sundaeMachineUsedTime = seatedTable.timeSundaeMachineWasUsed;
-		dinerEntry.foodServedTime = seatedTable.timeFoodBroughtToTable;
-		
+		copyUsedTimeToDinerEntry(dinerEntry);
 		Tables.getStaticInstance().releaseTable(seatedTable.tableId);
 		dinerEntry.timeOfLeaving = Timer.getStaticInstance().getTime();
 		leave();
 	}
 	
+	/**
+	 * 
+	 */
+	private void getTableForDiner() {
+		this.seatedTable = Tables.getStaticInstance().getTableForDiner(this);
+		this.seatingTime = Timer.getStaticInstance().getTime();
+	}
+
+
+	/**
+	 * @param dinerEntry
+	 */
+	private void CopyTimeLogsToDinerEntry(DinerEntry dinerEntry) {
+		dinerEntry.arrivalTime = this.arrivalTime;
+		dinerEntry.seatingTime = this.seatingTime;
+		dinerEntry.tableNumber = this.seatedTable.tableId;
+	}
+
+	/**
+	 * @param dinerEntry
+	 */
+	private void copyUsedTimeToDinerEntry(DinerEntry dinerEntry) {
+		dinerEntry.burgerMachineUsedTime = this.seatedTable.timeBurgerMacihineWasUsed;
+		dinerEntry.friesMachineUsedTime = this.seatedTable.timeFriesMachineWasUsed;
+		dinerEntry.sodaMachineUsedTime = this.seatedTable.timeSodaMachineWasUsed;
+		dinerEntry.sundaeMachineUsedTime = this.seatedTable.timeSundaeMachineWasUsed;
+		dinerEntry.foodServedTime = this.seatedTable.timeFoodBroughtToTable;
+	}
+
+
 	public void leave() {
-		inRestaurant = false;
+		this.inRestaurant = false;
 		synchronized(Diners.getStaticInstance()) {
 			Diners.getStaticInstance().leaveRestaurant();}
 		synchronized(Tables.getStaticInstance()) {
