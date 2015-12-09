@@ -3,10 +3,10 @@
  */
 
 /**
- * @author Jhansi
+ * @author Rakshith Kunchum
  *
  */
-public class DinerEntry {
+public class CustomerEntry {
 	
 	public int arrivalTime;
 	public int seatingTime;

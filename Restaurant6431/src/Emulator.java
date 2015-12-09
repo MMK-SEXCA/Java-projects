@@ -3,7 +3,7 @@
  */
 
 /**
- * @author Jhansi
+ * @author Rakshith Kunchum
  *
  */
 import java.io.BufferedReader;
@@ -12,16 +12,16 @@ import java.util.ArrayList;
 
 public class Emulator {
 	
-	private final int MAX_TIME=120;
-	private Diners diners;
+	private final int MAX_TIME = Constants.getMaxTime();
+	private Customers customers;
 	private Cooks cooks;
 	private Tables tables;
-	private Timer timer;
-	private OutputLogger outputLogger;
+	private Clock clock;
+	private Logger logger;
 
 	public static void main(String[] args) {
 		if (args.length < 1) {
-			System.out.println("Input file name argument is missing. Please run in the following format : " +
+			System.out.println("Input file Not Found/Input file name argument is missing.\nPlease run the project in the following format : " +
 					"java Emulator <InputFile name>");
 			System.exit(0);
 		}
@@ -45,9 +45,9 @@ public class Emulator {
 			while((line = inputReader.readLine()) != null){
 				String orderLine[] = line.split("\\s+");
 				int arrivalTimeStamp = Integer.parseInt(orderLine[0].trim());
-				DinerOrder newDinerOrder = new DinerOrder(Integer.parseInt(orderLine[1].trim()), 
+				Order newDinerOrder = new Order(Integer.parseInt(orderLine[1].trim()), 
 						Integer.parseInt(orderLine[2].trim()), Integer.parseInt(orderLine[3].trim()), Integer.parseInt(orderLine[4].trim()));
-				restaurant.diners.addDiner(orderNumber, new Diner(arrivalTimeStamp,newDinerOrder,orderNumber));
+				restaurant.customers.addDiner(orderNumber, new Customer(arrivalTimeStamp,newDinerOrder,orderNumber));
 				orderNumber++;
 			}
 			inputReader.close();
@@ -58,11 +58,11 @@ public class Emulator {
 	}
 
 	private void runSimulation() {
-		while(timer.getTime() <= MAX_TIME || Diners.getStaticInstance().getNumberOfCurrentDiners() > 0) {
-			diners.startDinersArrivedNow();
-			timer.increment(); 
-			synchronized(timer) {
-				timer.notifyAll();
+		while(clock.getTime() <= MAX_TIME || Customers.getStaticInstance().getNumberOfCurrentDiners() > 0) {
+			customers.startDinersArrivedNow();
+			clock.increment(); 
+			synchronized(clock) {
+				clock.notifyAll();
 			}
 		}
 	}
@@ -72,9 +72,9 @@ public class Emulator {
 	 */
 	private void printOutput() {
 		String str;
-		str = outputLogger.header;
+		str = logger.header;
 		System.out.println(str);
-		ArrayList<DinerEntry> entry = outputLogger.getOutputData();
+		ArrayList<CustomerEntry> entry = logger.getOutputData();
 		for(int i=0; i<entry.size(); i++) {
 			str = 	i + "\t" + entry.get(i).toString();
 			System.out.println(str);
@@ -87,14 +87,14 @@ public class Emulator {
 	 * @param numberOfTables
 	 */
 	public Emulator(int numberOfDiners, int numberOfTables, int numberOfCooks) {
-		timer = Timer.getStaticInstance();
+		clock = Clock.getStaticInstance();
 		tables = Tables.getStaticInstance();
 		tables.initialize(numberOfTables);
-		diners = Diners.getStaticInstance();
-		diners.initialize(numberOfDiners);
+		customers = Customers.getStaticInstance();
+		customers.initialize(numberOfDiners);
 		cooks = Cooks.getStaticInstance();
 		cooks.initialize(numberOfCooks);
-		outputLogger = OutputLogger.getStaticInstance();
-		outputLogger.initialize(numberOfDiners);
+		logger = Logger.getStaticInstance();
+		logger.initialize(numberOfDiners);
 	}
 }

@@ -3,33 +3,33 @@
  */
 
 /**
- * @author Jhansi
+ * @author Rakshith Kunchum
  *
  */
-public class Timer {
+public class Clock {
 	
-	private static Timer timer = null;
+	private static Clock clock = null;
 	private static int time;
 	
 	/**
 	 * default constructor
 	 */
-	public Timer() {
+	public Clock() {
 		time = 0;
 	}
 	
-	public static int getTime() {
+	public int getTime() {
 		return time;
 	}
 
 	/**
 	 * @return
 	 */
-	public static Timer getStaticInstance() {
-		if(timer == null) {
-			timer = new Timer();
+	public static Clock getStaticInstance() {
+		if(clock == null) {
+			clock = new Clock();
 		}
-		return timer;
+		return clock;
 	}
 	
 	public static void increment() {

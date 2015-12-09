@@ -3,7 +3,7 @@
  */
 
 /**
- * @author Jhansi
+ * @author Rakshith Kunchum
  *
  */
 public class Table {
@@ -12,9 +12,9 @@ public class Table {
 	public boolean isOccupied;
 	public boolean cookAssigned;
 	public boolean foodServed;
-	private DinerOrder order;
+	private Order order;
 	public Cook cook;
-	public Diner diner;
+	public Customer customer;
 	public int timeBurgerMacihineWasUsed;
 	public int timeFriesMachineWasUsed;
 	public int timeSodaMachineWasUsed;
@@ -39,11 +39,11 @@ public class Table {
 		this.order = null;
 	}
 	
-	public DinerOrder getOrder() {
+	public Order getOrder() {
 		return order;
 	}
 
-	public synchronized void setOrder(DinerOrder order) {
+	public synchronized void setOrder(Order order) {
 		this.order = order;
 		notifyAll();
 	}
@@ -77,7 +77,7 @@ public class Table {
 	
 	public synchronized void serveFood() {
 		this.foodServed = true;
-		this.timeFoodBroughtToTable = Timer.getStaticInstance().getTime();
+		this.timeFoodBroughtToTable = Clock.getStaticInstance().getTime();
 		notifyAll();
 	}
 }

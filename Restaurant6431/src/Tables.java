@@ -3,7 +3,7 @@
  */
 
 /**
- * @author Jhansi
+ * @author Rakshith Kunchum
  *
  */
 public class Tables {
@@ -40,14 +40,14 @@ public class Tables {
 	}
 
 	/**
-	 * @param diner
+	 * @param customer
 	 * @return
 	 */
-	synchronized public Table getTableForDiner(Diner diner) {
+	synchronized public Table getTableForDiner(Customer customer) {
 		// TODO Auto-generated method stub
 		int index = -1;
 		while(index == -1) {
-			if(Diners.getStaticInstance().isEarliest(diner.getDinerId())) {
+			if(Customers.getStaticInstance().isEarliest(customer.getDinerId())) {
 				for(int i=0; i<tables.length; i++) {
 					if(!tables[i].isOccupied) {
 						index = i;
@@ -64,7 +64,7 @@ public class Tables {
 			}
 		}
 		tables[index].isOccupied = true;
-		tables[index].diner = diner;
+		tables[index].customer = customer;
 		notifyAll();
 		return tables[index];
 	}
@@ -80,7 +80,7 @@ public class Tables {
 			}
 			
 			if(index == -1) {
-				if(Diners.getStaticInstance().getNumberOfCurrentDiners() == 0)
+				if(Customers.getStaticInstance().getNumberOfCurrentDiners() == 0)
 					break;
 				try {
 					wait();
@@ -98,7 +98,7 @@ public class Tables {
 	}
 	
 	synchronized public void releaseTable(int index) {
-		System.out.println("Time : "+Timer.getStaticInstance().getTime()+"\t"+Thread.currentThread().getName()+" is leaving.");
+		System.out.println("Time : "+Clock.getStaticInstance().getTime()+"\t"+Thread.currentThread().getName()+" is leaving.");
 		tables[index].release();
 	}
 }

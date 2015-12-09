@@ -3,15 +3,15 @@
  */
 
 /**
- * @author Jhansi
+ * @author Rakshith Kunchum
  *
  */
 public class Cook implements Runnable{
 	
-	private final int MAX_TIME=120;
+	private final int MAX_TIME = Constants.getMaxTime();
 	private int cookId;		
 	private Table tableServing;
-	private DinerOrder order;
+	private Order order;
 	private Thread thread;
 	public int timeBurgerMacihineWasUsed;
 	public int timeFriesMachineWasUsed;
@@ -20,7 +20,7 @@ public class Cook implements Runnable{
 	
 	public Cook(int cookId) {
 		this.cookId = cookId;
-		this.thread = new Thread(this, "Cook - "+this.cookId);
+		this.thread = new Thread(this, "Cook ID - "+this.cookId);
 		this.thread.start();
 	}
 	
@@ -29,7 +29,7 @@ public class Cook implements Runnable{
 	}
 	
 	public void run() {
-		while(Timer.getStaticInstance().getTime() <= MAX_TIME || Diners.getStaticInstance().getNumberOfCurrentDiners() > 0) {
+		while(Clock.getStaticInstance().getTime() <= MAX_TIME || Customers.getStaticInstance().getNumberOfCurrentDiners() > 0) {
 				tableServing = Tables.getStaticInstance().getTableForCook();
 				if(tableServing != null) {
 					InitailizeMachineTimeUsed();
@@ -38,7 +38,7 @@ public class Cook implements Runnable{
 					order = this.tableServing.getOrder();
 					VendingMachine machine = VendingMachine.getInstance();
 					while(!order.isComplete()) {
-						PrepareItem fooditem = machine.getMachineFor(order);
+						DispenseFoodItem fooditem = machine.getMachineFor(order);
 						fooditem.prepare(order, this);
 					}
 					CopyMachineTimeUsed();

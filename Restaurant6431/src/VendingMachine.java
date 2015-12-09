@@ -3,22 +3,22 @@
  */
 
 /**
- * @author Jhansi
+ * @author Rakshith Kunchum
  *
  */
 public class VendingMachine {
 	private final int MAX_TIME=120;
 	private static VendingMachine instance = null;
-	private BurgerMachine burgerMachine;
-	private FriesMachine friesMachine;
-	private CokeMachine cokeMachine;
-	private SundaeMachine sundaeMachine;
+	private BurgerDispenser burgerDispenser;
+	private FriesDispenser friesDispenser;
+	private CokeDispenser cokeDispenser;
+	private SundaeDispenser sundaeDispenser;
 	
 	private VendingMachine() {
-		burgerMachine = new BurgerMachine(5);
-		friesMachine = new FriesMachine(3);
-		cokeMachine  = new CokeMachine(2);
-		sundaeMachine = new SundaeMachine(1);
+		burgerDispenser = new BurgerDispenser(5);
+		friesDispenser = new FriesDispenser(3);
+		cokeDispenser  = new CokeDispenser(2);
+		sundaeDispenser = new SundaeDispenser(1);
 	}
 	
 	public static VendingMachine getInstance() {
@@ -28,48 +28,48 @@ public class VendingMachine {
 		return instance;
 	}
 	
-	public PrepareItem getMachineFor(DinerOrder order) {
-		while(Timer.getStaticInstance().getTime() <=MAX_TIME || Diners.getStaticInstance().getNumberOfCurrentDiners() > 0) {
+	public DispenseFoodItem getMachineFor(Order order) {
+		while(Clock.getStaticInstance().getTime() <=MAX_TIME || Customers.getStaticInstance().getNumberOfCurrentDiners() > 0) {
 			if(!order.burgersReady) {
-				if(!burgerMachine.isOccupied()) {
-					synchronized(burgerMachine) {
-						if(!burgerMachine.isOccupied()) {		
-							burgerMachine.occupy();
+				if(!burgerDispenser.isOccupied()) {
+					synchronized(burgerDispenser) {
+						if(!burgerDispenser.isOccupied()) {		
+							burgerDispenser.occupy();
 							//System.out.println("Time : "+Timer.getStaticInstance().getTime()+" Burger machine being alloted to : "+Thread.currentThread().getName());
-							return burgerMachine;
+							return burgerDispenser;
 						}
 					}
 				}
 			}
 			if(!order.friesReady) {
-				if(!friesMachine.isOccupied()) {
-					synchronized(friesMachine) {
-						if(!friesMachine.isOccupied()) {	
-							friesMachine.occupy();
+				if(!friesDispenser.isOccupied()) {
+					synchronized(friesDispenser) {
+						if(!friesDispenser.isOccupied()) {	
+							friesDispenser.occupy();
 							//System.out.println("Time : "+Timer.getStaticInstance().getTime()+" Fries machine being alloted to : "+Thread.currentThread().getName());
-							return friesMachine;
+							return friesDispenser;
 						}
 					}
 				}
 			}
 			if(!order.cokeReady) {
-				if(!cokeMachine.isOccupied()) {
-					synchronized(cokeMachine) {
-						if(!cokeMachine.isOccupied()) {	
-							cokeMachine.occupy();
+				if(!cokeDispenser.isOccupied()) {
+					synchronized(cokeDispenser) {
+						if(!cokeDispenser.isOccupied()) {	
+							cokeDispenser.occupy();
 							//System.out.println("Time : "+Timer.getStaticInstance().getTime()+" Coke machine being alloted to : "+Thread.currentThread().getName());
-							return cokeMachine;
+							return cokeDispenser;
 						}
 					}
 				}
 			}
 			if(!order.sundaeReady) {
-				if(!sundaeMachine.isOccupied()) {
-					synchronized(sundaeMachine) {
-						if(!sundaeMachine.isOccupied()) {	
-							sundaeMachine.occupy();
+				if(!sundaeDispenser.isOccupied()) {
+					synchronized(sundaeDispenser) {
+						if(!sundaeDispenser.isOccupied()) {	
+							sundaeDispenser.occupy();
 							//System.out.println("Time : "+Timer.getStaticInstance().getTime()+" Sundae machine being alloted to : "+Thread.currentThread().getName());
-							return sundaeMachine;
+							return sundaeDispenser;
 						}
 					}
 				}

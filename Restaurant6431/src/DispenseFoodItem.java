@@ -3,14 +3,14 @@
  */
 
 /**
- * @author Jhansi
+ * @author Rakshith Kunchum
  *
  */
-public class PrepareItem {
+public class DispenseFoodItem {
 	public int timer;
 	public boolean isOccupied;
 	
-	public PrepareItem(int timer) {
+	public DispenseFoodItem(int timer) {
 		this.timer = timer;
 		isOccupied = false;
     }
@@ -23,49 +23,49 @@ public class PrepareItem {
 		return isOccupied;
 	}
 	
-	public void prepare(DinerOrder order, Cook cook) {
+	public void prepare(Order order, Cook cook) {
 		int timeForCooking = timer;
-		if(this instanceof BurgerMachine){
+		if(this instanceof BurgerDispenser){
 			timeForCooking = order.numberOfBurgers * timer;
-		}else if(this instanceof FriesMachine){
+		}else if(this instanceof FriesDispenser){
 			timeForCooking = order.numberOfFries * timer;
-		}else if(this instanceof CokeMachine){
+		}else if(this instanceof CokeDispenser){
 			timeForCooking = order.numberOfCokes * timer;
-		}else if(this instanceof SundaeMachine){
+		}else if(this instanceof SundaeDispenser){
 			timeForCooking = order.numberOfSundae * timer;
 		}
 		
-		int startTime = Timer.getStaticInstance().getTime();
-		if(this instanceof BurgerMachine){
+		int startTime = Clock.getStaticInstance().getTime();
+		if(this instanceof BurgerDispenser){
 			cook.timeBurgerMacihineWasUsed = startTime;
-		}else if(this instanceof FriesMachine){
+		}else if(this instanceof FriesDispenser){
 			cook.timeFriesMachineWasUsed = startTime;
-		}else if(this instanceof CokeMachine){
+		}else if(this instanceof CokeDispenser){
 			cook.timeSodaMachineWasUsed = startTime;
-		}else if(this instanceof SundaeMachine){
+		}else if(this instanceof SundaeDispenser){
 			cook.timeSundaeMachineWasUsed = startTime;
 		}
 		
-		while(Timer.getStaticInstance().getTime() < startTime + timeForCooking) {
+		while(Clock.getStaticInstance().getTime() < startTime + timeForCooking) {
 			//cooking
 			try {
-				synchronized(Timer.getStaticInstance()) {
-					Timer.getStaticInstance().wait();
+				synchronized(Clock.getStaticInstance()) {
+					Clock.getStaticInstance().wait();
 				}
 			} catch(InterruptedException ie) {}
 		}
 		this.isOccupied = false;
 		
-		if(this instanceof BurgerMachine){
+		if(this instanceof BurgerDispenser){
 			order.burgersReady = true;
 			//System.out.println("Time : "+Timer.getStaticInstance().getTime()+" Burgers are ready by "+Thread.currentThread().getName());
-		}else if(this instanceof FriesMachine){
+		}else if(this instanceof FriesDispenser){
 			order.friesReady = true;
 			//System.out.println("Time : "+Timer.getStaticInstance().getTime()+" Fries are ready by "+Thread.currentThread().getName());
-		}else if(this instanceof CokeMachine){
+		}else if(this instanceof CokeDispenser){
 			order.cokeReady = true;
 			//System.out.println("Time : "+Timer.getStaticInstance().getTime()+" Coke is ready by "+Thread.currentThread());
-		}else if(this instanceof SundaeMachine){
+		}else if(this instanceof SundaeDispenser){
 			order.sundaeReady = true;
 			//System.out.println("Time : "+Timer.getStaticInstance().getTime()+" Sundae is ready by "+Thread.currentThread().getName());
 		}

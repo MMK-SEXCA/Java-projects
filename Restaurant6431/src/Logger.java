@@ -5,16 +5,16 @@ import java.util.ArrayList;
  */
 
 /**
- * @author Jhansi
+ * @author Rakshith Kunchum
  *
  */
-public class OutputLogger {
-	private static OutputLogger instance;
-	private ArrayList<DinerEntry> DinerLogs;
+public class Logger {
+	private static Logger instance;
+	private ArrayList<CustomerEntry> DinerLogs;
 	public String header = "Diner\t" +"Arrived" + "Seating\t" +"Table-ID" +"Cook-ID\t" +"Food\t" + 
 			"Leaving\t"+"BTime\t"+"FTime\t"+"CTime\t"+"STime";
 	
-	private OutputLogger() {
+	private Logger() {
 		
 	}
 	
@@ -22,18 +22,18 @@ public class OutputLogger {
 	 * @param numberOfDiners
 	 */
 	public void initialize(int numberOfDiners) {
-		DinerLogs = new ArrayList<DinerEntry>();
+		DinerLogs = new ArrayList<CustomerEntry>();
 		for(int i=0; i<numberOfDiners; i++) {
-			DinerLogs.add(new DinerEntry());
+			DinerLogs.add(new CustomerEntry());
 		}
 	}
 	
 	/**
 	 * @return
 	 */
-	public static OutputLogger getStaticInstance() {
+	public static Logger getStaticInstance() {
 		if(instance == null) {
-			instance = new OutputLogger();
+			instance = new Logger();
 		}
 		return instance;
 	}
@@ -41,7 +41,7 @@ public class OutputLogger {
 	/**
 	 * @return
 	 */
-	public ArrayList<DinerEntry> getOutputData() {
+	public ArrayList<CustomerEntry> getOutputData() {
 		return DinerLogs;
 	}
 }

@@ -3,10 +3,10 @@
  */
 
 /**
- * @author Jhansi
+ * @author Rakshith Kunchum
  *
  */
-public class DinerOrder {
+public class Order {
 	
 	public int numberOfBurgers;
 	public int numberOfFries;
@@ -23,7 +23,7 @@ public class DinerOrder {
 	 * @param numberOfCokes
 	 * @param numberOfSundae
 	 */
-	public DinerOrder(int numberOfBurgers, int numberOfFries, int numberOfCokes, int numberOfSundae) {
+	public Order(int numberOfBurgers, int numberOfFries, int numberOfCokes, int numberOfSundae) {
 		
 		this.numberOfBurgers = numberOfBurgers;
 		this.numberOfFries = numberOfFries;
