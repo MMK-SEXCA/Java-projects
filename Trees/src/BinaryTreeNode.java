@@ -135,4 +135,20 @@ public class BinaryTreeNode {
 		this.setLeft(this.right);
 		this.setRight(temp);
 	}	
+	
+	public void insertLeft(BinaryTreeNode node){
+		this.left = node;
+	}
+	
+	public void insertRight(BinaryTreeNode node){
+		this.right = node;
+	}
+	
+	public void insertLeft(int data){
+		this.left = new BinaryTreeNode(data);
+	}
+	
+	public void insertRight(int data){
+		this.right = new BinaryTreeNode(data);
+	}
 }

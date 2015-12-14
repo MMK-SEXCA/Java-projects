@@ -122,4 +122,25 @@ public class BinarySearchTree {
      		return 1+ Math.max(maxDepthBinaryTreeRecursive(node.left),maxDepthBinaryTreeRecursive(node.right));
      	}
      }
+     
+     //
+     public BinaryTreeNode extractLeafList(BinaryTreeNode node, BinaryTreeNode list_node){
+     	if(node == null)
+     		return null;
+     	if(node.left == null && node.right == null){
+     		if(list_node.data == Integer.MIN_VALUE){
+     			list_node.data = node.data;
+     			list_node.left = null;
+     			list_node.right = null;
+     			return list_node;
+     		}else{
+     			BinaryTreeNode newnode = new BinaryTreeNode(node.data);
+     			list_node.right = newnode;
+     			newnode.left = list_node;
+     			return newnode;
+     		}
+     	}else{
+     		return extractLeafList(node.right,extractLeafList(node.left,list_node));
+     	}
+     }
 }
